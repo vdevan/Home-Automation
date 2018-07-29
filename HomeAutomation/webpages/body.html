@@ -1,0 +1,133 @@
+﻿<h1>Universal Control for Home Automation Project</h1>
+
+<div id="controlpanel">
+    <!--Start of Control Panel-->
+
+    <div id="controls">
+        <!--Control Buttons-->
+        <h2>Curtain Controls</h2>
+        <div id="btncnt">
+            <button class="btnjs btnup" name="ButtonUp0" id="btnUp">
+                <div class="btnimg divup"></div>
+            </button>
+            <button class="btnjs" name="ButtonStop0" id="btnUp">
+                <div style="margin-top: -5px; margin-left: -2px;"><span class="btnstop"> </span></div>
+            </button>
+            <button class="btnjs btndwn" name="ButtonDown0">
+                <div class="btnimg divdown"></div>
+            </button>
+            <p><span>Turns: </span><span id="tltxt">1</span> <input class="trnclass" id="Slider0" type="range" min="0" max="100" step="1" value="0" /></p>
+        </div>
+
+        <div id="btncnt">
+            <button class="btnjs btnup" name="ButtonUp1" id="btnUp">
+                <div class="btnimg divup"></div>
+            </button>
+            <button class="btnjs" name="ButtonStop1" id="btnUp">
+                <div style="margin-top: -5px; margin-left: -2px;"><span class="btnstop"> </span></div>
+            </button>
+            <button class="btnjs btndwn" name="ButtonDown1">
+                <div class="btnimg divdown"></div>
+            </button>
+            <p><span>Turns: </span><span id="tltxt">1</span> <input class="trnclass" id="Slider1" type="range" min="0" max="100" step="1" value="0" /></p>
+        </div>
+
+        <div id="btncnt">
+            <button class="btnjs btnup" name="ButtonUp2" id="btnUp">
+                <div class="btnimg divup"></div>
+            </button>
+            <button class="btnjs" name="ButtonStop2" id="btnUp">
+                <div style="margin-top: -5px; margin-left: -2px;"><span class="btnstop"> </span></div>
+            </button>
+            <button class="btnjs btndwn" name="ButtonDown2">
+                <div class="btnimg divdown"></div>
+            </button>
+            <p><span>Turns: </span><span id="tltxt">1</span> <input class="trnclass" id="Slider2" type="range" min="0" max="100" step="1" value="0" /></p>
+        </div>
+
+        <div id="btnrange">
+            <h2>Light Dimmers</h2>
+            <div id="btnsc">
+                <p>Dimmer1: <input class="sldrclass" id="Slider3" type="range" min="0" max="100" step="25" value="0" /><span class="sltxt">0</span></p>
+                <p>Dimmer2: <input class="sldrclass" id="Slider4" type="range" min="0" max="100" step="5" value="0" /><span class="sltxt">0</span></p>
+                <p>Dimmer3: <input class="sldrclass" id="Slider5" type="range" min="0" max="100" step="5" value="0" /><span class="sltxt">0</span></p>
+            </div>
+        </div>
+
+    </div> <!-- End of Control buttons-->
+
+    <div id="btnport">
+        <!--Start of Port Control Switches-->
+        <h2>Get Room Temperature</h2>
+        <div id="btnioc">
+            <div id="btnsw">
+                <div class="row1">
+                    <button class="btnjs btnsw" value="" name="Switch0"><span class="btnface">1</span></button>
+                    <button class="btnjs btnsw" value="" name="Switch1"><span class="btnface">2</span></button>
+                    <button class="btnjs btnsw" value="" name="Switch2"><span class="btnface">3</span></button>
+                </div>
+                <div class="row2">
+                    <button class="btnjs btnsw" value="" name="Switch3"><span class="btnface">4</span></button>
+                    <button class="btnjs btnsw" value="" name="Switch4"><span class="btnface">5</span></button>
+                    <button class="btnjs btnsw" value="" name="Switch5"><span class="btnface">6</span></button>
+                </div>
+            </div>
+        </div>
+        <h2>Intruder Detection<br/> 
+        Start / Stop Monitoring</h2>
+        <div id="btnpss">
+            <div class="row1">
+                <div class="btnchk"><input type="checkbox" class="btnin" name="PortSetter0"><label><span>1</span></label></div>
+                <div class="btnchk"><input type="checkbox" class="btnin" name="PortSetter1"><label><span>2</span></label></div>
+                <div class="btnchk"><input type="checkbox" class="btnin" name="PortSetter2"><label><span>3</span></label></div>
+            </div>
+            <div class="row2">
+                <div class="btnchk"><input type="checkbox" class="btnin" name="PortSetter3"><label><span>4</span></label></div>
+                <div class="btnchk"><input type="checkbox" class="btnin" name="PortSetter4"><label><span>5</span></label></div>
+                <div class="btnchk"><input type="checkbox" class="btnin" name="PortSetter5"><label><span>6</span></label></div>
+            </div>
+        </div>
+
+    </div><!--End of Control Switches-->
+
+    <!-- Currently not used Text boxes-->
+    <!--
+    <div #id="txtcnt">
+        <div id="txt">
+            <p>
+                <span style="margin-left:10px;">Text1: </span><input type="text" name="TextToPi1" class="txtin1" value="" />
+                <span style="margin-left:10px;">Text2: </span><input type="text" name="TextToPi2" class="txtin2" value="" />
+                <span style="margin-left:10px;">
+                    <button class="btntxt" value="">Send</button>
+                </span>
+            </p>
+        </div>
+    </div>
+        -->
+
+    <div id="logtxt">
+        <p>&nbsp;</p>
+        <p>Last Action: <span id="log"></span></p>
+        <p>Server Returned: <span id="retVal"></span></p>
+    </div>
+    <p>&nbsp;</p>
+</div> <!--End of Control Panel-->
+
+<!--Start of Configuration Panel-->
+<div id="confpanel">
+    <div id="txtarea" class="txtar">
+        <h2>Intruder & Temperature Monitor</h2>
+        <textarea id="textarea" name="Alerts" class="textclass" rows="10" readonly></textarea>
+    </div>
+    <!--Log Requirement Check box-->
+    <div id="logchk" class="diag">
+        <h2>Log Information</h2>
+        <p>Log actions to Diagnostic Channel: <input type="checkbox" class="btnlog" name="LogDiag"></p>
+        <p>Log actions to log to a file: <input type="checkbox" class="btnlog" name="LogFile"></p>
+        <p>Record Temperature: <input type="checkbox" class="btnlog" name="LogTemp"></p>
+        <p style="color:#ed143d;">
+            All Log files are stored under <br />
+            "User Folders\LocalAppData\HomeAutomation\LocalState"
+        </p>
+    </div>
+</div>
