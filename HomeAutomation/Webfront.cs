@@ -16,6 +16,12 @@ using Windows.Networking;
 
 namespace HomeAutomation
 {
+    /// <summary>
+    /// Web front service. Listens to request, prepares the response and submits to the incoming request. 
+    /// It could be a simple web page request - by just sending "/" or a query to get a data - by sending "/?"
+    /// This is where all messages arrive and are properly dispatched - both to the application and also to the 
+    /// user. A simple background application that runs automatically when the system starts.
+    /// </summary>
     public sealed class Webfront
     {
         private LoggingChannel lc = new LoggingChannel("Web Front", null, new Guid(Constants.GUIDSTRING)); //Used for debugging
@@ -64,6 +70,12 @@ namespace HomeAutomation
             PA.Initialise();
         }
 
+        /// <summary>
+        /// Take a backup of Log file if it exists. File names are provided in Constants. 
+        /// All log files are stored under the folder
+        /// "User Folders\LocalAppData\HomeAutomation\LocalState". While this path is hard coded, the name of 
+        /// the file can be changed in Constants.
+        /// </summary>
         private void BackupLogFile()
         {
             try
@@ -83,6 +95,13 @@ namespace HomeAutomation
             }
         }
 
+        /// <summary>
+        /// This the main interface to user - a simple HTML page with JQuery scripts. Socket used is 8080 for incoming
+        /// HTML requests. When the request arrives a detailed HTML page is created and submitted to the requesting 
+        /// browser. The stored variables are updated as well 
+        /// </summary>
+        /// <param name="sender">StreamSocketListener with all details are passed</param>
+        /// <param name="args">Provides connection details. Use the details to provide to present the webpage</param>
         private async void Listener_ConnectionReceived(StreamSocketListener sender, StreamSocketListenerConnectionReceivedEventArgs args)
         {
             StringBuilder request = new StringBuilder();
@@ -235,12 +254,7 @@ namespace HomeAutomation
                     index = Convert.ToInt32(inputString.Substring(index - 1, 1));
                     if (index < Constants.ROOMS)
                         inputString = LSS.GetTemperature(index);
-                    /*else
-                    {
-                        //Testing for sending email
-                        await Task.Run(()=>LSS.SendEmailAsync());
-                        inputString += " Time Stamp: " + DateTime.Now.ToString() + "\n";
-                    }*/
+
                 }
                 else
                 {
@@ -277,7 +291,7 @@ namespace HomeAutomation
 
 
         /// <summary>
-        /// Provide feedback to inform the action processed
+        /// Provide feedback to inform the action processed. Appends with proper message header before being sent
         /// </summary>
         /// <param name="strMessage">Message to be sent to web client</param>
         private async void PostFeedback(string strMessage, StreamSocketListenerConnectionReceivedEventArgs args)
@@ -313,6 +327,11 @@ namespace HomeAutomation
             }
         }
 
+        /// <summary>
+        /// Used to filter the incoming request and send only the valid data, stripping of the message headers
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         private string GetQuery(StringBuilder request)
         {
             string data = "";
@@ -328,6 +347,11 @@ namespace HomeAutomation
             return data;
         }
 
+        /// <summary>
+        /// If log to file is turned on, then the events are logged here as a tracing mechanism. More details if required
+        /// can be added, if this is not adequate.
+        /// </summary>
+        /// <param name="strText"></param>
         public async void WriteDebugInfo(string strText)
         {
             try

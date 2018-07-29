@@ -8,8 +8,8 @@
 #define HELLO 1
 #define TEMPERATURE 2
 
-const char* ssid = "RMHome";
-const char* password = "paged0wn";
+const char* ssid="SSID"; //type your SSID here
+const char* password = "password"; //Type your Password here
 const String strHello = "Hello";
 const unsigned int localUdpPort = 7210; 
 const unsigned int remoteUdpPort = 51000;

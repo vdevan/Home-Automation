@@ -1,0 +1,148 @@
+﻿<meta charset="utf-8" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
+<title>Home Automation</title>
+
+
+<script>
+    var BOUNCE = 1000; //Switch bounce. Change depending upon Pi response to process.
+    
+    /*
+    setInterval("alertfunction ();", 5000);
+    function alertfunction() {
+        $.get("Action_Intruder", function (result) {
+            if (result != "None")
+                $("#textarea").append(result);
+        });
+    }  
+    */
+
+    $(document).ready(function () {
+
+        $(".btnjs").click(function () {
+            $(".btnjs").prop("disabled", true);
+            var name = this.name;
+            $("#log").text(name + ": Clicked");
+
+            $.get("", { [name]: "Action_Clicked" }, function (result) {
+                $("#retVal").text(result);
+            });
+            setTimeout(function () { $(".btnjs").prop("disabled", false); }, BOUNCE);
+        });
+
+        $(".btnup").click(function () {
+            $(".btnjs").prop("disabled", true);
+            var index = this.name.charAt(8);
+            var max = $("#Slider" + index).attr("max");
+            $("#Slider" + index).val(max);
+            $("#Slider" + index).trigger('change');
+            $("#Slider" + index).prev().text(max); //Set the vSlider value in the Text box that is the next of Slider
+            
+            setTimeout(function () { $(".btnjs").prop("disabled", false); }, BOUNCE);
+        });
+
+        $(".btndwn").click(function () {
+            $(".btnjs").prop("disabled", true);
+            var index = this.name.charAt(10);
+
+            $("#Slider" + index).val(5);
+            $("#Slider" + index).trigger('change');
+            $("#Slider" + index).prev().text(5); //Set the vSlider value in the Text box that is the next of Slider
+
+
+            setTimeout(function () { $(".btnjs").prop("disabled", false); }, BOUNCE);
+        });
+
+        
+        $(".btnsw").click(function () {
+            $(".btnsw").prop("disabled", true);
+            var name = this.name;
+            //$("#log").text(name + ": Clicked");
+
+            $.get("", { [name]: "Action_Clicked" }, function (result) {
+                $("#textarea").append(result);
+            });
+            setTimeout(function () { $(".btnsw").prop("disabled", false); }, BOUNCE);
+        });
+
+        $(".btnst").click(function () {
+            $(".btnst").prop("disabled", true);
+            var name = this.name;
+            $("#log").text(name + ": Clicked");
+
+            $.get("", { [name]: "Action_Clicked" }, function (result) {
+                $("#retVal").text(result);
+            });
+            setTimeout(function () { $(".btnst").prop("disabled", false); }, BOUNCE);
+        });
+
+        $(".btnin").click(function () {
+            $(".btnin").prop("disabled", true);
+            var name = this.name;
+            var ckb = $("input[name=" + name + "]").is(':Checked') ? "Action_Checked" : "Action_UnChecked";
+            $("#log").text(name + ckb);
+
+            $.get("", { [name]: ckb }, function (res) {
+                $("#retVal").text(res);
+            });
+            setTimeout(function () { $(".btnin").prop("disabled", false); }, BOUNCE);
+        });
+
+        //Log info Checkbox
+        $(".btnlog").click(function () {
+            $(".btnlog").prop("disabled", true);
+            var name = this.name;
+            var ckb = $("input[name=" + name + "]").is(':Checked') ? "Action_Checked" : "Action_UnChecked";
+            $("#log").text(name + ckb);
+
+            $.get("", { [name]: ckb }, function (res) {
+                $("#retVal").text(res);
+            });
+            setTimeout(function () { $(".btnlog").prop("disabled", false); }, BOUNCE);
+        });
+
+        $(".sldrclass").click(function () {
+            $(".sldrclass").prop("disabled", true);
+            var sl = this.id;
+            var value = "Action_" + $("#" + sl).val();
+            $("#" + sl).next().text($("#" + sl).val()); //Set the hSlider value in the Text box that is the next of Slider
+            $("#log").text(sl + " Value: " + value); //Set the log 
+
+            $.get("", { [sl]: value }, function (res) {
+                $("#retVal").text(res);
+            });
+            setTimeout(function () { $(".sldrclass").prop("disabled", false); }, BOUNCE);
+        });
+
+        $(".trnclass").click(function () {
+            $(".trnclass").prop("disabled", true);
+            var tl = this.id;
+            var tvalue = "Action_" + $("#" + tl).val();
+            $("#" + tl).prev().text($("#" + tl).val()); //Set the vSlider value in the Text box that is the next of Slider
+
+            $("#log").text(tl + " Value: " + tvalue); //Set the log 
+
+            $.get("", { [tl]: tvalue }, function (res) {
+                $("#retVal").text(res);
+            });
+            setTimeout(function () { $(".trnclass").prop("disabled", false); }, BOUNCE);
+
+        });
+
+        $(".btntxt").click(function () {
+            $(".btntxt").prop("disabled", true);
+            var text = "Action_Text1" + $(".txtin1").val() + "Text2" + $(".txtin2").val();
+            var name = "Text";
+            $("#log").text(name + text);
+            $.get("", { [name]: text }, function (res) {
+                $("#retVal").text(res);
+            });
+            setTimeout(function () { $(".btntxt").prop("disabled", false); }, BOUNCE);
+        });
+
+    });
+
+
+
+</script>
+   

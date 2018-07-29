@@ -4,8 +4,8 @@
 #include <ESP8266WiFi.h>
 #include <WiFiUdp.h>
 
-const char* ssid="RMHome";
-const char* password = "paged0wn";
+const char* ssid="SSID"; //type your SSID here
+const char* password = "password"; //Type your Password here
 const String strBright = "Brightness Value=";
 const String strNight = "Brightness Night Value=";
 const String strGetBright = "Get Brightness";
@@ -127,7 +127,7 @@ void setup()
   pinMode(DB,OUTPUT);
   //Set the range for Analogue (PWM) 
   analogWriteRange(101); //PWM: 0~100
-  analogWriteFreq(1000);
+  analogWriteFreq(1000); //1KHz
   
   //Turn all LED Off initially
   digitalWrite(PWMA,LOW);

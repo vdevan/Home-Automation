@@ -6,17 +6,19 @@ using System.Threading.Tasks;
 
 namespace HomeAutomation
 {
+    /// <summary>
+    /// Process Action sends message to NodeMCU devices, unlike ListenSocketServices which this listens 
+    /// to the message from the devices. Curtain Motor control and Light dimmer devices come under this 
+    /// category. Both the devices are controlled by sending action messages that are pre-defined to 
+    /// take appropriate action
+    /// </summary>
     public sealed class ProcessActions
     {
         //Automation capability Defined.
         private List<CurtainMotor> Curtains = new List<CurtainMotor>();
         private List<LightDimmer> Dimmers = new List<LightDimmer>();
 
-        //Only the IP Address. We will keep the sockets the same.
-        //private string[] CurtainAddress = { "192.168.0.152", "192.168.0.151", "192.168.0.153" };
-        //private string[] DimmerAddress = { "192.168.0.160", "192.168.0.161", "192.168.0.162" };
-
-       
+     
 
         public ProcessActions()
         {
@@ -25,17 +27,14 @@ namespace HomeAutomation
 
 
         /// <summary>
-        /// This procedure will look for WebService application and then initiate and connect it. The  
-        /// connection itself will be stored in the ApplicationServiceConnection variable which will be 
-        /// used for communication with the Web Service.This will ensure to get the messages passed
-        /// by the Web client(browser) and at the same time send a feedback to the WebService
-        /// which will be picked by the Web client.
-        /// It will also declare all the objects of Automation
-        /// </summary>
+        /// Create the instances of Curtain Motor class and Light Dimmer class. Initially only 3 rooms are defined.
+        /// If you have more rooms to control just increae the Rooms in Constants. Establish connection for each of
+        /// the defined devices, so they are ready to receive messages
+        /// /// </summary>
         public void Initialise()
         {
             //Add the Automation Objects
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < Constants.ROOMS; i++)
             {
                 //Add Curtain Motor
                 CurtainMotor curtain = new CurtainMotor();
@@ -53,6 +52,14 @@ namespace HomeAutomation
 
         }
 
+        /// <summary>
+        /// Currently used as feedback to the web interface so the slider button can be properly synchrnised. 
+        /// One drawback is that it does not actually get the distance though that facility is available in the device
+        /// program. This will send the stored value which need not be the same as the current curtain position if it 
+        /// has been moved manually or stopped half way through an operation. 
+        /// </summary>
+        /// <param name="room">Room or Window for which the position is required</param>
+        /// <returns></returns>
         public int GetDistance(int room)
         {
             if (room < Constants.ROOMS)
@@ -60,6 +67,12 @@ namespace HomeAutomation
             return 0;
         }
 
+        /// <summary>
+        /// This is used for setting the minimum value for sliders as the web interface HTML page is prepared. 
+        /// Apart from that it has no use.
+        /// </summary>
+        /// <param name="room">Room or Window for which this value is required</param>
+        /// <returns></returns>
         public int GetMinDistance(int room)
         {
             if (room < Constants.ROOMS)
@@ -67,6 +80,12 @@ namespace HomeAutomation
             return 0;
         }
 
+        /// <summary>
+        /// This is used for setting the maximum value for sliders as the web interface HTML page is prepared. 
+        /// Apart from that it has no use.
+        /// </summary>
+        /// <param name="room">Room or Window for which this value is required</param>
+        /// <returns></returns>
         public int GetMaxDistance(int room)
         {
             if (room < Constants.ROOMS)
@@ -74,7 +93,12 @@ namespace HomeAutomation
             return 0;
         }
 
-
+        /// <summary>
+        /// To set the slider at the correct position this value is sought by Web Interface.
+        /// </summary>
+        /// <param name="room">Room for which this value is required</param>
+        /// <param name="bNight">Flag to indicate night light or normaly lighting</param>
+        /// <returns></returns>
         public int GetDimmerValue(int room, bool bNight)
         {
             if (room < Constants.ROOMS)
@@ -87,6 +111,13 @@ namespace HomeAutomation
             return 0;
         }
 
+        /// <summary>
+        /// This is where the webinterface drops the messages that are received from user browser. The method
+        /// will sort through the message and initiates appropriate action by calling in the NodeMCU devices. 
+        /// The message itself will carry room nos and the action to be taken - unique for light dimmers and 
+        /// curtain motors
+        /// </summary>
+        /// <param name="data">The data received fromt the user web query</param>
         public void ProcessActionMessage(string data)
         {
             int index;

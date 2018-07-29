@@ -10,6 +10,10 @@ using Windows.Storage.Streams;
 
 namespace HomeAutomation
 {
+    /// <summary>
+    /// Socket services used by all the NodeMCU devices. This program dispatches the message to the appropriate
+    /// device and obtains feedback as well. At this stage the feedback from NodeMCU is ignored.
+    /// </summary>
     public sealed class SocketServices
     {
         //Check and remove all the variables
@@ -18,12 +22,9 @@ namespace HomeAutomation
         private string RemoteMessage;
         private DatagramSocket HostSocket;
 
-
-
-        //If  you want to display message received to UI use this variable
-        //public CoreDispatcher Dispatcher { get; private set; }
-
-
+        /// <summary>
+        /// Declare and Initialise a new DatagramSocket.
+        /// </summary>
         public SocketServices()
         {
             HostSocket = new DatagramSocket();
@@ -31,6 +32,11 @@ namespace HomeAutomation
 
         }
 
+        /// <summary>
+        /// Handles Message received from the NodeMCU device. Currently not used. Left for future implementation
+        /// </summary>
+        /// <param name="sender">DatagramSocket</param>
+        /// <param name="args">Contains received information, IP address and port</param>
         private void MessageReceived(DatagramSocket sender, DatagramSocketMessageReceivedEventArgs args)
         {
             DataReader reader = args.GetDataReader();
@@ -42,12 +48,22 @@ namespace HomeAutomation
             Debug.WriteLine("Remote Message Received from IP: {0} Port: {1} Message: {2}", RemoteAddress.ToString(), RemotePort, RemoteMessage);
         }
 
+        /// <summary>
+        /// Initialise the socket services with the right port and Host IP
+        /// </summary>
+        /// <param name="HostIP">IP address for the device</param>
+        /// <param name="ServicePort">Port used by that device for communication</param>
         public void Initialise(string HostIP, string ServicePort)
         {
             RemoteAddress = new HostName(HostIP);
             RemotePort = ServicePort;
         }
 
+        /// <summary>
+        /// Only method used to send the appropriate message to the NodeMCU device that is configured with
+        /// the IP and port which the device will be listening too.
+        /// </summary>
+        /// <param name="msg"></param>
         public async void SendMessageToHost(string msg)
         {
             try
@@ -68,18 +84,7 @@ namespace HomeAutomation
            
         }
 
-        /*
-        public string RetrieveMessage()
-        {
-            string strReturn = RemoteMessage;
-            if (strReturn.Length == 0)
-                return "";
-            else
-            {
-                RemoteMessage = "";
-                return strReturn;
-            }
-        }*/
+
 
     }
 }

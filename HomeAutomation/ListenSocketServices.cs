@@ -18,6 +18,12 @@ using Windows.System.Threading;
 
 namespace HomeAutomation
 {
+    /// <summary>
+    /// This is the reverse of ProcessAction class. While Process Action sends message to NodeMCU devices, this listens 
+    /// to the message from the devices. Temperature and Intruder Alert are the messages sent from the devices. 
+    /// Temperature sensor will update at frequent intervals while Intruder Alert will only send a message if Alert 
+    /// is on and an intruder is detected.
+    /// </summary>
     public sealed class ListenSocketServices
     {
         //Check and remove all the variables
@@ -39,11 +45,16 @@ namespace HomeAutomation
         private ThreadPoolTimer timer;
         public bool bRec { get; set; }
 
+        /// <summary>
+        /// Temperature sensor can log text to a file. All log files are stored under the folder
+        /// "User Folders\LocalAppData\HomeAutomation\LocalState". While this path is hard coded, the name of 
+        /// the file can be changed in Constants.
+        /// </summary>
         public ListenSocketServices()
         {
             //bIAlert = false;
             GuestSocket =  new DatagramSocket();
-            LogTempr = Windows.Storage.ApplicationData.Current.LocalFolder.Path + "\\" + "TR.txt";
+            LogTempr = Windows.Storage.ApplicationData.Current.LocalFolder.Path + "\\" + Constants.TEMPLOGFILE;
             bRec = false;
         }
 
@@ -68,20 +79,25 @@ namespace HomeAutomation
                 Detectors.Add(detector);
             }
 
-            //Initialise the buffer for storing Temperatures and Intruder Detection strings
+            //Initialise the buffer for storing Temperatures strings
             temperatureAlerts = new string[Constants.ROOMS];
-            //intruderAlerts = new string[Constants.ROOMS];
 
             for (int i = 0; i < Constants.ROOMS; i++)
             {
                 temperatureAlerts[i] = "No Connectivity to Room: " + (i + 1).ToString() + "\n";
-                //intruderAlerts[i] = "";
+                
             }
             GuestSocket.MessageReceived += MessageReceivedAsync;
             GuestSocket.BindServiceNameAsync(Constants.LISTENPORT).AsTask().Wait();
 
         }
 
+        /// <summary>
+        /// If Temperature recording is required then this function will start or stop the action. Note currently
+        /// only one sensor is used and the recordings are done for one sensor only. If you need to use more sensors
+        /// then uncomment the two lines - //for(inti=0.... and //writer.WriteLine...
+        /// </summary>
+        /// <param name="Start">Flag to start or stop the recordings</param>
         public void StartRec(bool Start)
         {
             try
@@ -108,9 +124,6 @@ namespace HomeAutomation
 
                         writer.Flush();
 
-                        //counter--;
-                        //if (counter <= 0)
-                        //    source.Cancel();
                     }
                 }, period);
             }
@@ -120,6 +133,16 @@ namespace HomeAutomation
             }
         }
 
+
+        /// <summary>
+        /// This will monitor various messages and act on them accordingly. Temperature sensor messages are stored in the
+        /// variable with DateTime Stamp added. Thus if the datetime stamp is different from current time (10 minutes grace)
+        /// then you know the device is not functioning. Intruder Detect also sends INTRUDERALIVE pulse. Though not used
+        /// currently, similar methods to be followed for expanding this to all devices, to provide keep alive pulse and
+        /// initmate user when it fails. Need to expand across all devices. Left for next version.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private async void MessageReceivedAsync(DatagramSocket sender, DatagramSocketMessageReceivedEventArgs args)
         {
             try
@@ -132,7 +155,7 @@ namespace HomeAutomation
                 RemotePort = args.RemotePort;
                 //Debug.WriteLine("Remote Message Received from IP: {0} Port: {1} Message: {2}", RemoteAddress.ToString(), RemotePort, RemoteMessage);
 
-                if (RemoteMessage.Contains("temperature is: "))  //10 characters
+                if (RemoteMessage.Contains(Constants.TEMPSENSE))  //10 characters
                 {
                     for (int i = 0; i < Constants.ROOMS; i++)
                     {
@@ -148,12 +171,8 @@ namespace HomeAutomation
                     if(RemoteMessage.Contains (Constants.INTRUDERDETECT))
                     {
                         Debug.WriteLine(RemoteMessage);
-                        if (RemoteMessage.Contains("Garage")) //Un comment this if all six rooms are used.
-                        {
-                            RemoteMessage += " @ " + DateTime.Now.ToString();
-                            await Task.Run(() => SendEmailAsync(RemoteMessage));
-                        }
-
+                        RemoteMessage += " @ " + DateTime.Now.ToString();
+                        await Task.Run(() => SendEmailAsync(RemoteMessage));
                     }
                     else
                     {
@@ -181,7 +200,8 @@ namespace HomeAutomation
         }
 
         /// <summary>
-        /// Data received from "MessageReceived" must be sorted out here and properly stored
+        /// Data received from "MessageReceived" is sorted out here and properly stored.
+        /// Reserved for next version
         /// </summary>
         /// <param name="feedBack"></param>
         private void StoreData(string data, string ipAddress)
@@ -190,20 +210,21 @@ namespace HomeAutomation
 
         }
 
+        /// <summary>
+        /// If a user query about Temperature of a particular room, that message is passed here. This method 
+        /// will retrieve the latest stored temperature.
+        /// </summary>
+        /// <param name="Room">Room for which Temperature is requested</param>
+        /// <returns></returns>
         public string GetTemperature(int Room)
         {
             return temperatureAlerts[Room];
         }
 
-        /*
-        public string GetIntruderAlert(int Room)
-        {
-            string strRet = intruderAlerts[Room];
-            intruderAlerts[Room] = "";
-            return strRet;
-        }
-        */
-
+        /// <summary>
+        /// This method is used for setting Intruder Alert on or Off
+        /// </summary>
+        /// <param name="data">Room no for setting the alerts</param>
         public void PortSwitchMessage(string data)
         {
             int room;
@@ -222,12 +243,22 @@ namespace HomeAutomation
             }
         }
 
+        /// <summary>
+        /// You can also retrieve the current status of the monitoring of Intruder Alert. This will be required
+        /// by Webfront class to provide current status
+        /// </summary>
+        /// <param name="room">Room no for which status requested</param>
+        /// <returns></returns>
         public string GetPortSwitchStatus(int room)
         {
             return Detectors[room].bStartMonitor.ToString().ToLowerInvariant();
         }
 
-
+        /// <summary>
+        /// Sends and Email alert when a user is detected. Email address is provided in Constants. If cc and bcc
+        /// are required they can be configured too.
+        /// </summary>
+        /// <param name="strMessage"></param>
          public async void SendEmailAsync(string strMessage)
          {
              try
@@ -236,7 +267,7 @@ namespace HomeAutomation
                  {
                      EmailMessage emailMessage = new EmailMessage();
 
-                    emailMessage.To.Add(new EmailRecipient("vdevan@gmail.com"));
+                    emailMessage.To.Add(new EmailRecipient(Constants.EMAILADDRESS));
                      //emailMessage.CC.Add(new EmailRecipient("someone2@anotherdomain.com"));
                      //emailMessage.Bcc.Add(new EmailRecipient("someone3@anotherdomain.com"));
                     emailMessage.Subject = "Intruder Detection Service";

@@ -10,6 +10,11 @@ using Windows.System.Threading;
 
 namespace HomeAutomation
 {
+    /// <summary>
+    /// Entry point to the application.  Declares a Webfront class and  Instantiates it
+    /// Note: the Application is just a background application without any user Interface. This allows us to start
+    /// the application whenever the Pi restarts.
+    /// </summary>
     public sealed class StartupTask : IBackgroundTask
     {
         private BackgroundTaskDeferral deferral;

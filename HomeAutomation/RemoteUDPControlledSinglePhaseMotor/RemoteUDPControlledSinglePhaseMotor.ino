@@ -2,32 +2,8 @@
 #include <WiFiUdp.h>
 #include <NewPing.h>
 
-/**** Note the Motor terminal port mapping
-Terminal Pins GPIO  Arduino Desc
-A-        1   5     D1      Red
-B-        2   4     D2      Blue
-A+        3   0     D3      Green
-B+        4   2     D4      Black
-
-+Vin  //Motor Input Voltage
--Vin
-+Vcc  //Node MCU Input
--Vcc  
-The number of steps in one revolution of 28BYJ-48 motor is 2038
-*****/
-/****Note on Stepper Motor ****
-Stepper Motor: 28BYJ-48
-Degree Rotation per Step: 5.625
-Total Steps per Revolution of Motor Spindle = 360 / 5.625 = 64
-Gear Ratio : 64:1
-No. of turns / step sequence = 8  (Function: Clockwise)
-
-Total Steps Per Revolution of outer Spindle = 64 * 64 / 8 = 512
-The number of steps in one revolution of Outer Spindle of 28BYJ-48 motor is 512
-*****/
-
-const char* ssid = "RMHome";
-const char* password = "paged0wn";
+const char* ssid="SSID"; //type your SSID here
+const char* password = "password"; //Type your Password here
 
 //Motor Control 
 const String strOpen = "Curtain Open";

@@ -6,10 +6,19 @@ using System.Threading.Tasks;
 
 namespace HomeAutomation
 {
+    /// <summary>
+    /// This is the main configuration sheet. All variables are declared here. Depending upon your needs the
+    /// values are to be changed. At the moment 4 devices are defined - Curtain control, Intruder detect, Light dimmer
+    /// Temperature sensor. If you want to add more devices, list them here so all changes will be in one location.
+    /// All commnads controlling the devices are also listed here, which should be identical to the defined ESP8266 device
+    /// See the document for details
+    /// </summary>
     static class Constants
     {
         //General Constants
         public const int ROOMS = 3; //Change depending upon your implementation
+        public const string EMAILADDRESS = "yourname@gmail.com";
+
 
         //Sockets Services Constants for various Hosts
         public const string CURTAINSOCKET = "4210";
@@ -27,7 +36,8 @@ namespace HomeAutomation
         public static string[] CurtainAddress = { "192.168.0.152", "192.168.0.151", "192.168.0.153" };
         public static string[] DimmerAddress = { "192.168.0.160", "192.168.0.161", "192.168.0.162" };
 
-        //IP Address Constants used by ListenSocket Services. We will keep the sockets the same. Used by Temperature control and Intruder Detector
+        //IP Address Constants used by ListenSocket Services. We will keep the sockets the same. 
+        //Used by Temperature control and Intruder Detector
         public static string[] IntruderDetectAddress = { "192.168.0.191", "192.168.0.192", "192.168.0.193" };
         public static string[] TemperatureMonitorAddress = { "192.168.0.181", "192.168.0.182", "192.168.0.183" };
 
@@ -67,6 +77,7 @@ namespace HomeAutomation
         public const string GUIDSTRING = "4bd2826e-54a1-4ba9-bf63-92b73ea1ac4a"; //GUID for Microsoft Diagnostic Logging Channel
         public const string LOGFILE = "HomeAutomationLog.txt";
         public const string LOGBAKFILE = "HomeAutomationBak.txt";
+        public const string TEMPLOGFILE = "TR.txt";
 
         //Webpage Messages
         public const string BUTTON = "/?Button";
@@ -81,6 +92,9 @@ namespace HomeAutomation
         public const string TEMP = "0";
         public const string INTRUDER = "1";
 
-        
+        //String for Temperature detection
+        public const string TEMPSENSE = "temperature is: ";
+
+
     }
 }
