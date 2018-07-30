@@ -131,36 +131,36 @@ namespace HomeAutomation
                     variables += "$(\"#log\").text(\"Initialised\");";
 
                     //Set Motor Turns Sliders correctly
-                    variables += string.Format("$(\".trnclass#Slider0\").attr(\"min\", {0});", PA.GetMinDistance(0));
-                    variables += string.Format("$(\".trnclass#Slider0\").attr(\"max\", {0});", PA.GetMaxDistance(0));
-                    variables += string.Format("$(\".trnclass#Slider0\").val({0});", PA.GetDistance(0));
-                    variables += "$(\".trnclass#Slider0\").trigger('change');";
-                    variables += string.Format("$(\".trnclass#Slider0\").prev().text(\"{0}\");", PA.GetDistance(0));
+                    variables += string.Format("$(\".trnclass#SliderA0\").attr(\"min\", {0});", PA.GetMinDistance(0));
+                    variables += string.Format("$(\".trnclass#SliderA0\").attr(\"max\", {0});", PA.GetMaxDistance(0));
+                    variables += string.Format("$(\".trnclass#SliderA0\").val({0});", PA.GetDistance(0));
+                    variables += "$(\".trnclass#SliderA0\").trigger('change');";
+                    variables += string.Format("$(\".trnclass#SliderA0\").prev().text(\"{0}\");", PA.GetDistance(0));
 
-                    variables += string.Format("$(\".trnclass#Slider1\").attr(\"min\", {0});", PA.GetMinDistance(1));
-                    variables += string.Format("$(\".trnclass#Slider1\").attr(\"max\", {0});", PA.GetMaxDistance(1));
-                    variables += string.Format("$(\".trnclass#Slider1\").val({0});", PA.GetDistance(1));
-                    variables += "$(\".trnclass#Slider1\").trigger('change');";
-                    variables += string.Format("$(\".trnclass#Slider1\").prev().text(\"{0}\");", PA.GetDistance(1));
+                    variables += string.Format("$(\".trnclass#SliderA1\").attr(\"min\", {0});", PA.GetMinDistance(1));
+                    variables += string.Format("$(\".trnclass#SliderA1\").attr(\"max\", {0});", PA.GetMaxDistance(1));
+                    variables += string.Format("$(\".trnclass#SliderA1\").val({0});", PA.GetDistance(1));
+                    variables += "$(\".trnclass#SliderA1\").trigger('change');";
+                    variables += string.Format("$(\".trnclass#SliderA1\").prev().text(\"{0}\");", PA.GetDistance(1));
 
-                    variables += string.Format("$(\".trnclass#Slider2\").attr(\"min\", {0});", PA.GetMinDistance(2));
-                    variables += string.Format("$(\".trnclass#Slider2\").attr(\"max\", {0});", PA.GetMaxDistance(2));
-                    variables += string.Format("$(\".trnclass#Slider2\").val({0});", PA.GetDistance(2));
-                    variables += "$(\".trnclass#Slider2\").trigger('change');";
-                    variables += string.Format("$(\".trnclass#Slider2\").prev().text(\"{0}\");", PA.GetDistance(2));
+                    variables += string.Format("$(\".trnclass#SliderA2\").attr(\"min\", {0});", PA.GetMinDistance(2));
+                    variables += string.Format("$(\".trnclass#SliderA2\").attr(\"max\", {0});", PA.GetMaxDistance(2));
+                    variables += string.Format("$(\".trnclass#SliderA2\").val({0});", PA.GetDistance(2));
+                    variables += "$(\".trnclass#SliderA2\").trigger('change');";
+                    variables += string.Format("$(\".trnclass#SliderA2\").prev().text(\"{0}\");", PA.GetDistance(2));
 
                     //Set Light Dimmers Sliders correctly
-                    variables += string.Format("$(\".sldrclass#Slider3\").val({0});", PA.GetDimmerValue(0,false));
-                    variables += "$(\".sldrclass#Slider3\").trigger('change');";
-                    variables += string.Format("$(\".sldrclass#Slider3\").next().text(\"{0}\");", PA.GetDimmerValue(0,false));
+                    variables += string.Format("$(\".sldrclass#SliderB0\").val({0});", PA.GetDimmerValue(0,false));
+                    variables += "$(\".sldrclass#SliderB0\").trigger('change');";
+                    variables += string.Format("$(\".sldrclass#SliderB0\").next().text(\"{0}\");", PA.GetDimmerValue(0,false));
 
-                    variables += string.Format("$(\".sldrclass#Slider4\").val({0});", PA.GetDimmerValue(0, true));
-                    variables += "$(\".sldrclass#Slider4\").trigger('change');";
-                    variables += string.Format("$(\".sldrclass#Slider4\").next().text(\"{0}\");", PA.GetDimmerValue(0, true));
+                    variables += string.Format("$(\".sldrclass#SliderB1\").val({0});", PA.GetDimmerValue(0, true));
+                    variables += "$(\".sldrclass#SliderB1\").trigger('change');";
+                    variables += string.Format("$(\".sldrclass#SliderB1\").next().text(\"{0}\");", PA.GetDimmerValue(0, true));
 
-                    variables += string.Format("$(\".sldrclass#Slider5\").val({0});", PA.GetDimmerValue(2, false));
-                    variables += "$(\".sldrclass#Slider5\").trigger('change');";
-                    variables += string.Format("$(\".sldrclass#Slider5\").next().text(\"{0}\");", PA.GetDimmerValue(2, false));
+                    variables += string.Format("$(\".sldrclass#SliderB2\").val({0});", PA.GetDimmerValue(2, false));
+                    variables += "$(\".sldrclass#SliderB2\").trigger('change');";
+                    variables += string.Format("$(\".sldrclass#SliderB2\").next().text(\"{0}\");", PA.GetDimmerValue(2, false));
 
                     // Log Information
                     variables += string.Format("$(\"input[name=LogDiag]\").prop(\"checked\", {0});", LOG.ToString().ToLowerInvariant());

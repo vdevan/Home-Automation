@@ -33,10 +33,10 @@
         $(".btnup").click(function () {
             $(".btnjs").prop("disabled", true);
             var index = this.name.charAt(8);
-            var max = $("#Slider" + index).attr("max");
-            $("#Slider" + index).val(max);
-            $("#Slider" + index).trigger('change');
-            $("#Slider" + index).prev().text(max); //Set the vSlider value in the Text box that is the next of Slider
+            var max = $("#SliderA" + index).attr("max");
+            $("#SliderA" + index).val(max);
+            $("#SliderA" + index).trigger('change');
+            $("#SliderA" + index).prev().text(max); //Set the vSlider value in the Text box that is the next of Slider
             
             setTimeout(function () { $(".btnjs").prop("disabled", false); }, BOUNCE);
         });
@@ -44,10 +44,10 @@
         $(".btndwn").click(function () {
             $(".btnjs").prop("disabled", true);
             var index = this.name.charAt(10);
-
-            $("#Slider" + index).val(5);
-            $("#Slider" + index).trigger('change');
-            $("#Slider" + index).prev().text(5); //Set the vSlider value in the Text box that is the next of Slider
+            var min = $("#SliderA" + index).attr("min");
+            $("#SliderA" + index).val(min);
+            $("#SliderA" + index).trigger('change');
+            $("#SliderA" + index).prev().text(min); //Set the vSlider value in the Text box that is the next of Slider
 
 
             setTimeout(function () { $(".btnjs").prop("disabled", false); }, BOUNCE);

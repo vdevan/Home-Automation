@@ -140,23 +140,24 @@ namespace HomeAutomation
             //Process Slider Message for Screens.
             if (data.IndexOf(Constants.SLIDER) >= 0) //Set Turns for Screen
             {
+
                 index = data.IndexOf("=");
 
                 //If more than 10 rooms, this will have to change to read 2 characters. Also use 01 instead of 1
                 room = Convert.ToInt32(data.Substring(index - 1, 1));
-
-                if (room < 3)
+                char category = data.ElementAt(index - 2);
+                if (category == 'A')
                 {
 
-                    msg = data.Substring(index + Constants.SLIDER.Length); //We need only values here. Skip '=Action_' that web returns
+                    msg = data.Substring(index + 8); //We need only values here. Skip '=Action_' that web returns
                     Curtains.ElementAt(room).SetDistance(Convert.ToInt32(msg));
                 }
                 else
                 {
-                    if (room < 6)
+                    if (category == 'B')
                     {
-                        room -= 3;
-                        msg = data.Substring(index + Constants.SLIDER.Length); //We need only values here. Skip '=Action_' that web returns
+                        //room -= 3;
+                        msg = data.Substring(index + 8); //We need only values here. Skip '=Action_' that web returns
                         if (room == 1)
                         {
                             Dimmers.ElementAt(0).bNight = true;
