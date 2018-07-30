@@ -11,8 +11,18 @@ All of these are currently possible and the entire device construction with a wo
 A simple but efficient and expandable concept with a working model. If you like it feel free to browse the code and comment.
 
 Thanks to:
+
 LightBuzz team for their code on sending SMTP EMail from Windows IoT.
 Link: https://github.com/LightBuzz/SMTP-WinRT
 
 NewPing Arduino Library for Arduino by Tim Eckel
 Link: https://bitbucket.org/teckel12/arduino-new-ping/wiki/Home
+
+Library for Dallas/Maxim 1-Wire Chips by Paul Stoffregen
+Link: https://github.com/PaulStoffregen/OneWire
+
+Arduino-Temperature-Control-Library by Miles Burton
+Link: https://github.com/milesburton/Arduino-Temperature-Control-Library
+
+and lastly but not least: ESP8266 Community Forum for wonderful work done by them making coding the ESP8266 a breeze
+Link: https://github.com/esp8266
