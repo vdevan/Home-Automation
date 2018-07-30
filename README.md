@@ -9,3 +9,8 @@ Raspberry Pi, Windows IoT and Node MCU consisting of ESP8266 are the major compo
 A simple but efficient and expandable concept with a working model. If you like it feel free to browse the code and comment.
 
 Thanks to:
+LightBuzz team for their code on sending SMTP EMail from Windows IoT.
+Link: https://github.com/LightBuzz/SMTP-WinRT
+
+NewPing Arduino Library for Arduino by Tim Eckel
+Link: https://bitbucket.org/teckel12/arduino-new-ping/wiki/Home
